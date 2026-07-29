@@ -50,14 +50,27 @@ jobs:
           xcodebuild -version
           xcode-select -p
 
-      # 3. 解析 Swift PackageManager 依赖（ZIPFoundation）
+      # 3. 安装 XcodeGen
+      - name: Install XcodeGen
+        run: |
+          brew install xcodegen
+          xcodegen --version
+
+      # 4. 生成 Xcode 项目
+      - name: Generate Xcode project
+        run: |
+          xcodegen generate
+          echo "生成的项目文件："
+          ls -la *.xcodeproj
+
+      # 5. 解析 Swift PackageManager 依赖（ZIPFoundation）
       - name: Resolve Swift package dependencies
         run: |
           xcodebuild -resolvePackageDependencies \
             -project AresToolbox.xcodeproj \
             -scheme AresToolbox
 
-      # 4. 构建应用（未签名，针对通用 iOS 设备）
+      # 6. 构建应用（未签名，针对通用 iOS 设备）
       - name: Build app (unsigned)
         run: |
           xcodebuild build \
@@ -71,7 +84,7 @@ jobs:
             CODE_SIGN_IDENTITY="" \
             DEVELOPMENT_TEAM=""
 
-      # 5. 打包未签名 IPA
+      # 7. 打包未签名 IPA
       - name: Create unsigned IPA
         run: |
           # 定位构建产物中的 .app
@@ -103,7 +116,7 @@ jobs:
           # 保存文件名供后续步骤使用
           echo "IPA_NAME=$IPA_NAME" >> $GITHUB_ENV
 
-      # 6. 上传 IPA 构建产物
+      # 8. 上传 IPA 构建产物
       - name: Upload IPA artifact
         uses: actions/upload-artifact@v4
         with:
@@ -112,7 +125,7 @@ jobs:
           retention-days: 30
           if-no-files-found: error
 
-      # 7. 上传构建日志（便于排查问题）
+      # 9. 上传构建日志（便于排查问题）
       - name: Upload build logs
         if: always()
         uses: actions/upload-artifact@v4
@@ -123,7 +136,7 @@ jobs:
           retention-days: 7
           if-no-files-found: ignore
 
-      # 8. 创建 GitHub Release（仅在标签推送或手动触发且勾选时）
+      # 10. 创建 GitHub Release（仅在标签推送或手动触发且勾选时）
       - name: Create GitHub Release
         if: startsWith(github.ref, 'refs/tags/') || (github.event_name == 'workflow_dispatch' && github.event.inputs.create_release == 'true')
         uses: softprops/action-gh-release@v2
