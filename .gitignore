@@ -1,12 +1,11 @@
-# XcodeGen 生成的项目文件（本项目已直接包含 .xcodeproj，无需 XcodeGen）
-# 如使用 XcodeGen 重新生成，可取消下方注释
-# *.xcodeproj
-# *.xcworkspace
+# XcodeGen 生成的项目文件（不纳入版本控制，CI 自动生成）
+*.xcodeproj
+*.xcworkspace
 
 # XcodeGen 生成的 Info.plist
 AresToolbox/Info.plist
 
-# 保留 project.yml 配置文件（仅供参考）
+# 保留 project.yml 配置文件
 !project.yml
 
 # build 目录（CI 与本地构建产物）
