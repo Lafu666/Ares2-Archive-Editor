@@ -8,8 +8,9 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let window = UIWindow(frame: UIScreen.main.bounds)
         let vc = ViewController()
-        vc.title = "Ares2存档修改器"
-        window.rootViewController = vc
+        let nav = UINavigationController(rootViewController: vc)
+        nav.navigationBar.isTranslucent = false
+        window.rootViewController = nav
         window.makeKeyAndVisible()
         self.window = window
         return true
