@@ -1,0 +1,89 @@
+name: Build IPA
+
+# 触发方式：
+#  1. 手动：Actions 页 → Run workflow
+#  2. 打 tag（v 开头）自动构建并发布 Release
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    name: Build iOS IPA
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show Xcode & iOS SDK version
+        run: |
+          xcodebuild -version
+          xcrun --sdk iphoneos --show-sdk-version
+
+      # =========================================================
+      # 默认路径：构建【未签名】ipa（无需任何证书，fork 后即可跑通）
+      # 产物需用 Sideloadly / AltStore 用自己的 Apple ID 重签后安装。
+      # =========================================================
+      - name: Build .app (unsigned)
+        run: |
+          xcodebuild build \
+            -project Ares2SaveEditor.xcodeproj \
+            -scheme Ares2SaveEditor \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            EXPANDED_CODE_SIGN_IDENTITY=""
+
+      - name: Package unsigned IPA
+        run: |
+          APP=$(find build -name 'Ares2SaveEditor.app' -type d | head -1)
+          echo "Found app: $APP"
+          rm -rf Payload && mkdir Payload
+          cp -R "$APP" Payload/
+          zip -qr Ares2SaveEditor-unsigned.ipa Payload
+          ls -lh Ares2SaveEditor-unsigned.ipa
+
+      # =========================================================
+      # 可选路径：当仓库开启了 ENABLE_SIGNING 变量并配好证书
+      # Secrets 时，自动用真证书签名导出【可直接安装】的 ipa。
+      # =========================================================
+      - name: Sign & export signed IPA (optional)
+        if: ${{ vars.ENABLE_SIGNING == 'true' }}
+        env:
+          CERT_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+          P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
+          PROVISION_BASE64: ${{ secrets.BUILD_PROVISION_BASE64 }}
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+          BUNDLE_ID: ${{ secrets.APP_BUNDLE_ID }}
+        run: bash scripts/sign-and-export.sh
+
+      - name: Upload unsigned IPA
+        if: ${{ vars.ENABLE_SIGNING != 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: Ares2SaveEditor-unsigned-ipa
+          path: Ares2SaveEditor-unsigned.ipa
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Upload signed IPA
+        if: ${{ vars.ENABLE_SIGNING == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: Ares2SaveEditor-signed-ipa
+          path: build/ipa/*.ipa
+          if-no-files-found: error
+          retention-days: 90
+
+      # 打 tag 时把未签名 ipa 附到 GitHub Release
+      - name: Attach IPA to Release
+        if: startsWith(github.ref, 'refs/tags/v') && vars.ENABLE_SIGNING != 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: Ares2SaveEditor-unsigned.ipa
