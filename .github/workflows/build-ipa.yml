@@ -30,20 +30,24 @@ jobs:
           echo "---xcodegen---"
           xcodegen --version
 
-      # ── 关键修复：cd 到 ios-app 目录再操作 ──
-      - name: Verify project.yml exists
+      - name: List repo structure
         run: |
           echo "=== repo root ==="
           ls -la
-          echo "=== ios-app/ ==="
-          ls -la ios-app/ || echo "no ios-app dir"
+          echo ""
           echo "=== project.yml ==="
-          cat ios-app/project.yml || echo "project.yml NOT FOUND"
+          cat project.yml || echo "NOT FOUND at root"
+          echo ""
+          echo "=== SwiftSources/ ==="
+          ls -la SwiftSources/ || echo "NOT FOUND"
+          echo ""
+          echo "=== www/ ==="
+          ls -la www/ || echo "NOT FOUND"
 
       - name: Generate Xcode project
         run: |
-          cd ios-app
-          xcodegen generate
+          echo "Working directory: $(pwd)"
+          xcodegen generate --spec project.yml --project Ares2Calc.xcodeproj
           echo "=== xcodeproj ==="
           ls -la Ares2Calc.xcodeproj || echo "FAILED to generate"
 
@@ -51,7 +55,6 @@ jobs:
         id: archive
         continue-on-error: true
         run: |
-          cd ios-app
           mkdir -p build
           set +e
           xcodebuild archive \
@@ -76,14 +79,16 @@ jobs:
         if: steps.archive.outcome == 'failure' || steps.archive.outputs.archive_exit_code != '0'
         run: |
           echo "❌ Archive failed (exit code: ${{ steps.archive.outputs.archive_exit_code }})"
-          echo "==================== last 120 lines of build.log ===================="
-          tail -120 ios-app/build/build.log || true
+          echo "==================== last 150 lines of build.log ===================="
+          tail -150 build/build.log || true
           echo "===================================================================="
+          # 也打印完整文件列表辅助排查
+          echo "=== full repo tree ==="
+          find . -maxdepth 4 -not -path './.git*' | head -50
           exit 1
 
       - name: Verify archive product exists
         run: |
-          cd ios-app
           APP_PATH=$(find build/Ares2Calc.xcarchive/Products/Applications -maxdepth 1 -name "*.app" -type d 2>/dev/null | head -1)
           if [ -z "$APP_PATH" ]; then
             echo "::error::No .app found in archive"
@@ -93,17 +98,14 @@ jobs:
           echo "✅ Found app: $APP_PATH"
           ls -la "$APP_PATH"
 
-      - name: Patch Info.plist inside .app (safety net)
+      - name: Patch Info.plist inside .app
         run: |
-          cd ios-app
           APP_PATH=$(find build/Ares2Calc.xcarchive/Products/Applications -maxdepth 1 -name "*.app" -type d 2>/dev/null | head -1)
           PLIST="$APP_PATH/Info.plist"
 
-          # 确保 CFBundleExecutable 存在
           /usr/libexec/PlistBuddy -c "Set :CFBundleExecutable Ares2Calc" "$PLIST" 2>/dev/null || \
           /usr/libexec/PlistBuddy -c "Add :CFBundleExecutable string Ares2Calc" "$PLIST"
 
-          # 确保 ATS 允许本地加载
           /usr/libexec/PlistBuddy -c "Add :NSAppTransportSecurity dict" "$PLIST" 2>/dev/null
           /usr/libexec/PlistBuddy -c "Add :NSAppTransportSecurity:NSAllowsArbitraryLoads bool true" "$PLIST" 2>/dev/null
 
@@ -111,19 +113,16 @@ jobs:
 
       - name: Package unsigned IPA
         run: |
-          cd ios-app
           APP_PATH=$(find build/Ares2Calc.xcarchive/Products/Applications -maxdepth 1 -name "*.app" -type d 2>/dev/null | head -1)
 
           mkdir -p build/Payload
           rm -rf build/Payload/Ares2Calc.app
           cp -R "$APP_PATH" "build/Payload/Ares2Calc.app"
 
-          # 可执行权限
           if [ -f "build/Payload/Ares2Calc.app/Ares2Calc" ]; then
             chmod +x "build/Payload/Ares2Calc.app/Ares2Calc"
           fi
 
-          # dylib 权限
           find "build/Payload/Ares2Calc.app" -type f -name "*.dylib" -exec chmod +x {} \; 2>/dev/null || true
 
           cd build
@@ -131,13 +130,13 @@ jobs:
           echo "===== final ipa ====="
           ls -la "Ares2Calc-unsigned.ipa"
           echo "===== ipa contents ====="
-          unzip -l "Ares2Calc-unsigned.ipa" | head -20
+          unzip -l "Ares2Calc-unsigned.ipa" | head -25
 
       - name: Upload IPA artifact
         uses: actions/upload-artifact@v4
         with:
           name: Ares2Calc-iOS-unsigned-ipa
-          path: ios-app/build/Ares2Calc-unsigned.ipa
+          path: build/Ares2Calc-unsigned.ipa
           retention-days: 30
           if-no-files-found: error
 
@@ -146,5 +145,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: build-log
-          path: ios-app/build/build.log
+          path: build/build.log
           if-no-files-found: ignore
