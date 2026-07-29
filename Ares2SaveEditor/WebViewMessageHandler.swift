@@ -1,16 +1,28 @@
 import UIKit
 import WebKit
 
-/// 接收 JS postMessage 的 {filename, dataURL}，把 blob 落成临时文件并弹出系统分享面板，
-/// 让用户“存储到文件 App / AirDrop / ...”。
+/// JS ↔ 原生 消息中枢：
+/// - `openFile`：网页"加载"按钮被点击时触发，转交 ViewController 弹出原生文件选择器。
+/// - `saveBlob`：保存/导出时把 blob 落成临时文件并弹出系统分享面板（存储到文件 App / AirDrop…）。
 final class WebViewMessageHandler: NSObject, WKScriptMessageHandler {
     static let shared = WebViewMessageHandler()
-    weak var presenter: UIViewController?
+    weak var presenter: ViewController?
 
     func userContentController(_ userContentController: WKUserContentController,
                                didReceive message: WKScriptMessage) {
-        guard message.name == "saveBlob",
-              let body = message.body as? [String: Any],
+        switch message.name {
+        case "openFile":
+            // 文件选择器必须在主线程 present
+            DispatchQueue.main.async { self.presenter?.presentDocumentPicker() }
+        case "saveBlob":
+            handleSaveBlob(message)
+        default:
+            break
+        }
+    }
+
+    private func handleSaveBlob(_ message: WKScriptMessage) {
+        guard let body = message.body as? [String: Any],
               let dataURL = body["data"] as? String,
               let filename = body["filename"] as? String,
               let data = Self.data(fromDataURL: dataURL)
