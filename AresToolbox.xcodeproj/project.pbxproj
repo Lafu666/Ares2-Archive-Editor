@@ -1,0 +1,386 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+/* Begin PBXBuildFile section */
+		AA000001 /* AssetLoaderUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100001; };
+		AA000002 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100002; };
+		AA000003 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100003; };
+		AA000004 /* FileProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100004; };
+		AA000005 /* TimeConversionUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100005; };
+		AA000006 /* DataModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100006; };
+		AA000007 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100007; };
+		AA000008 /* AresToolboxApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100008; };
+		AA000009 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA100009; };
+		AA00000A /* FileBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA10000A; };
+		AA00000B /* DatabaseTreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA10000B; };
+		AA00000C /* TableEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA10000C; };
+		AA00000D /* EditOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA10000D; };
+		AA00000E /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA10000E; };
+		AA00000F /* ProgressDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA10000F; };
+		AA000010 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA100010; };
+		AA000011 /* 地图.txt in Resources */ = {isa = PBXBuildFile; fileRef = AA100011; };
+		AA000012 /* 天赋技能.txt in Resources */ = {isa = PBXBuildFile; fileRef = AA100012; };
+		AA000013 /* 已分类ID.txt in Resources */ = {isa = PBXBuildFile; fileRef = AA100013; };
+		AA000014 /* 物品ID22.txt in Resources */ = {isa = PBXBuildFile; fileRef = AA100014; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		AA100001 /* AssetLoaderUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetLoaderUtil.swift; sourceTree = "<group>"; };
+		AA100002 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		AA100003 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		AA100004 /* FileProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileProcessor.swift; sourceTree = "<group>"; };
+		AA100005 /* TimeConversionUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeConversionUtil.swift; sourceTree = "<group>"; };
+		AA100006 /* DataModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModels.swift; sourceTree = "<group>"; };
+		AA100007 /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
+		AA100008 /* AresToolboxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AresToolboxApp.swift; sourceTree = "<group>"; };
+		AA100009 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		AA10000A /* FileBrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileBrowserView.swift; sourceTree = "<group>"; };
+		AA10000B /* DatabaseTreeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseTreeView.swift; sourceTree = "<group>"; };
+		AA10000C /* TableEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableEditorView.swift; sourceTree = "<group>"; };
+		AA10000D /* EditOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditOptionsView.swift; sourceTree = "<group>"; };
+		AA10000E /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		AA10000F /* ProgressDialogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressDialogView.swift; sourceTree = "<group>"; };
+		AA100010 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AA100011 /* 地图.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "地图.txt"; sourceTree = "<group>"; };
+		AA100012 /* 天赋技能.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "天赋技能.txt"; sourceTree = "<group>"; };
+		AA100013 /* 已分类ID.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "已分类ID.txt"; sourceTree = "<group>"; };
+		AA100014 /* 物品ID22.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "物品ID22.txt"; sourceTree = "<group>"; };
+		AA200000 /* AresToolbox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AresToolbox.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AA300000 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AA400000 = {
+			isa = PBXGroup;
+			children = (
+				AA400001 /* AresToolbox */,
+				AA400006 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AA400006 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AA200000 /* AresToolbox.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AA400001 /* AresToolbox */ = {
+			isa = PBXGroup;
+			children = (
+				AA100008 /* AresToolboxApp.swift */,
+				AA400002 /* Core */,
+				AA400003 /* Models */,
+				AA400004 /* ViewModels */,
+				AA400005 /* Views */,
+				AA400007 /* Resources */,
+			);
+			path = AresToolbox;
+			sourceTree = "<group>";
+		};
+		AA400002 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				AA100001 /* AssetLoaderUtil.swift */,
+				AA100002 /* Constants.swift */,
+				AA100003 /* DatabaseManager.swift */,
+				AA100004 /* FileProcessor.swift */,
+				AA100005 /* TimeConversionUtil.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		AA400003 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AA100006 /* DataModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		AA400004 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				AA100007 /* AppViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		AA400005 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				AA100009 /* MainView.swift */,
+				AA10000A /* FileBrowserView.swift */,
+				AA10000B /* DatabaseTreeView.swift */,
+				AA10000C /* TableEditorView.swift */,
+				AA10000D /* EditOptionsView.swift */,
+				AA10000E /* SearchView.swift */,
+				AA10000F /* ProgressDialogView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		AA400007 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				AA100010 /* Assets.xcassets */,
+				AA100011 /* 地图.txt */,
+				AA100012 /* 天赋技能.txt */,
+				AA100013 /* 已分类ID.txt */,
+				AA100014 /* 物品ID22.txt */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AA500000 /* AresToolbox */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA700000 /* Build configuration list for PBXNativeTarget "AresToolbox" */;
+			buildPhases = (
+				AA600000 /* Sources */,
+				AA300000 /* Frameworks */,
+				AA600001 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AresToolbox;
+			packageProductDependencies = (
+				AA800000 /* ZIPFoundation */,
+			);
+			productName = AresToolbox;
+			productReference = AA200000 /* AresToolbox.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AA600003 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+			};
+			buildConfigurationList = AA700003 /* Build configuration list for PBXProject */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = "zh-Hans";
+			hasScannedForEncodings = 0;
+			knownRegions = ("zh-Hans", Base);
+			mainGroup = AA400000;
+			packageReferences = (
+				AA800001 /* XCRemoteSwiftPackageDescription "ZIPFoundation" */,
+			);
+			productRefGroup = AA400006 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AA500000 /* AresToolbox */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AA600001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA000010 /* Assets.xcassets in Resources */,
+				AA000011 /* 地图.txt in Resources */,
+				AA000012 /* 天赋技能.txt in Resources */,
+				AA000013 /* 已分类ID.txt in Resources */,
+				AA000014 /* 物品ID22.txt in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AA600000 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA000001 /* AssetLoaderUtil.swift in Sources */,
+				AA000002 /* Constants.swift in Sources */,
+				AA000003 /* DatabaseManager.swift in Sources */,
+				AA000004 /* FileProcessor.swift in Sources */,
+				AA000005 /* TimeConversionUtil.swift in Sources */,
+				AA000006 /* DataModels.swift in Sources */,
+				AA000007 /* AppViewModel.swift in Sources */,
+				AA000008 /* AresToolboxApp.swift in Sources */,
+				AA000009 /* MainView.swift in Sources */,
+				AA00000A /* FileBrowserView.swift in Sources */,
+				AA00000B /* DatabaseTreeView.swift in Sources */,
+				AA00000C /* TableEditorView.swift in Sources */,
+				AA00000D /* EditOptionsView.swift in Sources */,
+				AA00000E /* SearchView.swift in Sources */,
+				AA00000F /* ProgressDialogView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		AA700001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = ("DEBUG=1", "$(inherited)");
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		AA700002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AA700004 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_BITCODE = NO;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "阿瑞斯工具箱";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsMultipleScenes = NO;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIFileSharingEnabled = YES;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks");
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ares.toolbox";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AA700005 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_BITCODE = NO;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "阿瑞斯工具箱";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsMultipleScenes = NO;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIFileSharingEnabled = YES;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks");
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ares.toolbox";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AA700000 /* Build configuration list for PBXNativeTarget "AresToolbox" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA700004 /* Debug */,
+				AA700005 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA700003 /* Build configuration list for PBXProject */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA700001 /* Debug */,
+				AA700002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageDescription section */
+		AA800001 /* XCRemoteSwiftPackageDescription "ZIPFoundation" */ = {
+			isa = XCRemoteSwiftPackageDescription;
+			packageURL = "https://github.com/weichsel/ZIPFoundation";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.19;
+			};
+		};
+/* End XCRemoteSwiftPackageDescription section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AA800000 /* ZIPFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA800001 /* XCRemoteSwiftPackageDescription "ZIPFoundation" */;
+			productName = ZIPFoundation;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = AA600003 /* Project object */;
+}
