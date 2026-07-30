@@ -1,0 +1,7 @@
+build/
+*.xcworkspace
+Pods/
+DecryptEditor.xcodeproj/
+*.xcuserdata
+*.xcworkspace/xcuserdata
+DerivedData/
