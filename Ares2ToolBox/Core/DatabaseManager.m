@@ -59,14 +59,14 @@
         sqlite3_close(_database);
         _database = NULL;
     }
-    [self.tableNames removeAllObjects];
-    [self.tableColumns removeAllObjects];
-    [self.notNullColumns removeAllObjects];
+    [_tableNames removeAllObjects];
+    [_tableColumns removeAllObjects];
+    [_notNullColumns removeAllObjects];
     self.currentTable = nil;
 }
 
 - (void)loadAllTableNames {
-    [self.tableNames removeAllObjects];
+    [_tableNames removeAllObjects];
 
     sqlite3_stmt *stmt;
     const char *sql = "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name";
@@ -74,7 +74,7 @@
         while (sqlite3_step(stmt) == SQLITE_ROW) {
             const char *name = (const char *)sqlite3_column_text(stmt, 0);
             if (name) {
-                [self.tableNames addObject:[NSString stringWithUTF8String:name]];
+                [_tableNames addObject:[NSString stringWithUTF8String:name]];
             }
         }
         sqlite3_finalize(stmt);
@@ -106,8 +106,8 @@
         sqlite3_finalize(stmt);
     }
 
-    self.tableColumns[tableName] = [columns copy];
-    self.notNullColumns[tableName] = [notNulls copy];
+    _tableColumns[tableName] = [columns copy];
+    _notNullColumns[tableName] = [notNulls copy];
 }
 
 - (NSArray<NSDictionary *> *)loadTableData:(NSString *)tableName {
