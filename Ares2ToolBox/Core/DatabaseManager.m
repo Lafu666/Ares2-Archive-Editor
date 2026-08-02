@@ -113,6 +113,8 @@
 - (NSArray<NSDictionary *> *)loadTableData:(NSString *)tableName {
     if (!_database || !tableName) return nil;
 
+    self.currentTable = tableName;
+
     NSArray *columns = self.tableColumns[tableName];
     if (!columns || columns.count == 0) return nil;
 
