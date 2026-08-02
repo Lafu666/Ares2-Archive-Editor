@@ -1,0 +1,125 @@
+name: Build iOS IPA
+
+on:
+  push:
+    branches: [main, master]
+    tags: ['v*']
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+    inputs:
+      configuration:
+        description: 'Build configuration'
+        required: true
+        default: 'Release'
+        type: choice
+        options:
+          - Release
+          - Debug
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build Ares2ToolBox IPA
+    runs-on: macos-14
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '15.4'
+
+      - name: Show Xcode version
+        run: |
+          xcodebuild -version
+          xcrun --sdk iphoneos --show-sdk-version
+          echo "Build configuration: ${{ inputs.configuration || 'Release' }}"
+
+      - name: Resolve Dependencies
+        run: |
+          xcodebuild -resolvePackageDependencies \
+            -project Ares2ToolBox.xcodeproj \
+            -scheme Ares2ToolBox \
+            -configuration ${{ inputs.configuration || 'Release' }}
+
+      - name: Build Archive
+        run: |
+          xcodebuild archive \
+            -project Ares2ToolBox.xcodeproj \
+            -scheme Ares2ToolBox \
+            -configuration ${{ inputs.configuration || 'Release' }} \
+            -archivePath build/Ares2ToolBox.xcarchive \
+            -destination 'generic/platform=iOS' \
+            -sdk iphoneos \
+            -allowProvisioningUpdates \
+            CODE_SIGN_STYLE=Manual \
+            CODE_SIGN_IDENTITY="Apple Development" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            DEVELOPMENT_TEAM="" \
+            PROVISIONING_PROFILE_SPECIFIER="" \
+            ONLY_ACTIVE_ARCH=NO \
+            VALID_ARCHS="arm64 arm64e" \
+            ARCHS="arm64 arm64e" | tee xcodebuild_archive.log
+
+      - name: Check archive
+        run: |
+          if [ -d "build/Ares2ToolBox.xcarchive" ]; then
+            echo "Archive created successfully"
+            ls -la build/Ares2ToolBox.xcarchive/
+          else
+            echo "Archive creation failed"
+            exit 1
+          fi
+
+      - name: Export IPA
+        run: |
+          xcodebuild -exportArchive \
+            -archivePath build/Ares2ToolBox.xcarchive \
+            -exportPath build/export \
+            -exportOptionsPlist exportOptions.plist \
+            -allowProvisioningUpdates | tee xcodebuild_export.log
+        continue-on-error: true
+
+      - name: Check IPA
+        run: |
+          if [ -f "build/export/Ares2ToolBox.ipa" ]; then
+            echo "IPA created successfully"
+            ls -la build/export/
+          else
+            echo "IPA not found at expected path, searching..."
+            find build -name "*.ipa" -type f
+          fi
+
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Ares2ToolBox-iOS17-arm64e
+          path: build/export/*.ipa
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Upload build logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-logs
+          path: |
+            xcodebuild_archive.log
+            xcodebuild_export.log
+          retention-days: 7
+          if-no-files-found: ignore
+
+      - name: Create Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/export/*.ipa
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
