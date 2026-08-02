@@ -10,7 +10,6 @@
 #import "Constants.h"
 #import "minizip.h"
 #import <CommonCrypto/CommonDigest.h>
-#import <Compression/Compression.h>
 
 @interface FileProcessor ()
 @property (nonatomic, copy) NSString *tempDirPath;
