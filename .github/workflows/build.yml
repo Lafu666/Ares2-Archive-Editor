@@ -54,6 +54,7 @@ jobs:
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGNING_ALLOWED=NO \
+            PRODUCT_BUNDLE_IDENTIFIER=com.ars.decrypt.ios \
             ONLY_ACTIVE_ARCH=NO \
             VALID_ARCHS="arm64 arm64e" \
             ARCHS="arm64 arm64e" \
