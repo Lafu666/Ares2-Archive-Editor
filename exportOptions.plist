@@ -3,15 +3,15 @@
 <plist version="1.0">
 <dict>
 	<key>method</key>
-	<string>enterprise</string>
-	<key>teamID</key>
-	<string></string>
+	<string>development</string>
 	<key>signingStyle</key>
 	<string>manual</string>
-	<key>stripSwiftSymbols</key>
-	<true/>
+	<key>teamID</key>
+	<string></string>
 	<key>compileBitcode</key>
 	<false/>
+	<key>stripSwiftSymbols</key>
+	<true/>
 	<key>iCloudContainerEnvironment</key>
 	<string>Production</string>
 	<key>thinning</key>
@@ -19,9 +19,6 @@
 	<key>destination</key>
 	<string>export</string>
 	<key>provisioningProfiles</key>
-	<dict>
-		<key>com.ars.decrypt.ios</key>
-		<string>Ares2ToolBox_Provisioning</string>
-	</dict>
+	<dict/>
 </dict>
 </plist>
