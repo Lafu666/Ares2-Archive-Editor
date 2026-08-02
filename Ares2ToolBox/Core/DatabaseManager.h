@@ -10,9 +10,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class DatabaseManager;
+@class DBSearchResult;
 
 typedef void (^DBSearchProgressBlock)(NSString *tableName, NSInteger foundCount);
-typedef void (^DBSearchCompletionBlock)(NSArray<NSDictionary *> *results);
+typedef void (^DBSearchCompletionBlock)(NSArray<DBSearchResult *> *results);
 
 @interface DBSearchResult : NSObject
 @property (nonatomic, copy) NSString *tableName;
