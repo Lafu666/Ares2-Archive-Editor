@@ -30,7 +30,7 @@
     self.originalZipPath = inputPath;
     self.outputDir = outputDir;
 
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0), ^{
         @autoreleasepool {
             // 创建临时目录
             NSString *tempDir = [NSTemporaryDirectory() stringByAppendingPathComponent:
@@ -99,7 +99,7 @@
                      outputPath:(NSString *)outputPath
                        progress:(FPProgressBlock)progress
                      completion:(FPCompletionBlock)completion {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0), ^{
         @autoreleasepool {
             if (progress) dispatch_async(dispatch_get_main_queue(), ^{ progress(80, @"重新打包存档..."); });
 
@@ -127,7 +127,7 @@
          userFolderName:(NSString *)userFolderName
                progress:(FPProgressBlock)progress
              completion:(FPCompletionBlock)completion {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0), ^{
         @autoreleasepool {
             // 创建临时目录
             NSString *tempDir = [NSTemporaryDirectory() stringByAppendingPathComponent:
