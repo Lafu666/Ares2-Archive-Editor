@@ -4,21 +4,11 @@
 <dict>
 	<key>method</key>
 	<string>development</string>
-	<key>signingStyle</key>
-	<string>manual</string>
-	<key>teamID</key>
-	<string></string>
 	<key>compileBitcode</key>
 	<false/>
-	<key>stripSwiftSymbols</key>
-	<true/>
-	<key>iCloudContainerEnvironment</key>
-	<string>Production</string>
 	<key>thinning</key>
 	<string>&lt;none&gt;</string>
 	<key>destination</key>
 	<string>export</string>
-	<key>provisioningProfiles</key>
-	<dict/>
 </dict>
 </plist>
