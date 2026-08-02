@@ -83,7 +83,7 @@
 				A9488D990BBB259911CE5DD2 /* LaunchScreen.storyboard */,
 				E27A984D654821D07FCD9EB1 /* Assets.xcassets */,
 			);
-			path = ..;
+			path = Ares2ToolBox;
 			sourceTree = "<group>";
 		};
 		7E570DDF827050A82369B584 /* Constants */ = {
@@ -92,7 +92,7 @@
 				FC377A4C4A15544DC5E7CE8A /* Constants.h */,
 				DDD1DFB23B982EF8DAF61A26 /* Constants.m */,
 			);
-			path = Constants;
+			path = Ares2ToolBox/Constants;
 			sourceTree = "<group>";
 		};
 		DC713D960C0FD195C17AF08A /* Core */ = {
@@ -103,7 +103,7 @@
 				AB9099A435A240AE5AF30553 /* DatabaseManager.h */,
 				AEFCFAD8EFC89849B3AA7EFE /* DatabaseManager.m */,
 			);
-			path = Core;
+			path = Ares2ToolBox/Core;
 			sourceTree = "<group>";
 		};
 		28F49481A0A04DC427209BDF /* Models */ = {
@@ -112,14 +112,14 @@
 				A28DEFE39BF0027312476F57 /* Models.h */,
 				3EABEDCBBAA80DD488BD6407 /* Models.m */,
 			);
-			path = Models;
+			path = Ares2ToolBox/Models;
 			sourceTree = "<group>";
 		};
 		98AE43346C12ACE8AE340454 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = Views;
+			path = Ares2ToolBox/Views;
 			sourceTree = "<group>";
 		};
 		988C24C961B1CD2262801C45 /* ViewControllers */ = {
@@ -128,14 +128,14 @@
 				451B4CF36123FDF77656AF72 /* MainViewController.h */,
 				B02B61C4A3D70628ECE66FA2 /* MainViewController.m */,
 			);
-			path = ViewControllers;
+			path = Ares2ToolBox/ViewControllers;
 			sourceTree = "<group>";
 		};
 		405CACEC877409A977D21E02 /* Dialogs */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = Dialogs;
+			path = Ares2ToolBox/Dialogs;
 			sourceTree = "<group>";
 		};
 		F143262FDC5C0EED8DA0365B /* Utils */ = {
@@ -148,7 +148,7 @@
 				9132B63EF16287E4E9C349E0 /* AssetLoaderUtil.h */,
 				366EB16F508EBAD7B7C93ACF /* AssetLoaderUtil.m */,
 			);
-			path = Utils;
+			path = Ares2ToolBox/Utils;
 			sourceTree = "<group>";
 		};
 		1D53434BB88139B9AE270DA7 /* Resources */ = {
@@ -159,7 +159,7 @@
 				BF3C4C06434308BC89FA6A68 /* categorized_items.txt */,
 				956269F0E5D7B8756DADD6C7 /* item_ids.txt */,
 			);
-			path = Resources;
+			path = Ares2ToolBox/Resources;
 			sourceTree = "<group>";
 		};
 		C03987108976E334E2817EFD /* Products */ = {
