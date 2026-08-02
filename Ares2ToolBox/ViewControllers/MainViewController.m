@@ -14,7 +14,7 @@
 #import "AssetLoaderUtil.h"
 #import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
 
-@interface MainViewController () <UITableViewDelegate, UITableViewDataSource, UIDocumentPickerDelegate>
+@interface MainViewController () <UITableViewDelegate, UITableViewDataSource, UIDocumentPickerDelegate, UISearchBarDelegate>
 
 @property (nonatomic, strong) FileProcessor *fileProcessor;
 @property (nonatomic, strong) DatabaseManager *dbManager;
@@ -74,7 +74,7 @@
     // 搜索
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     self.searchController.searchBar.placeholder = @"搜索表数据...";
-    self.searchController.searchBar.delegate = (id)self;
+    self.searchController.searchBar.delegate = self;
     self.navigationItem.searchController = self.searchController;
 }
 
