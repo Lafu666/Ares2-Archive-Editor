@@ -41,59 +41,53 @@ jobs:
           xcrun --sdk iphoneos --show-sdk-version
           echo "Build configuration: ${{ inputs.configuration || 'Release' }}"
 
-      - name: Resolve Dependencies
-        run: |
-          xcodebuild -resolvePackageDependencies \
-            -project Ares2ToolBox.xcodeproj \
-            -scheme Ares2ToolBox \
-            -configuration ${{ inputs.configuration || 'Release' }}
-
       - name: Build Archive
         run: |
+          set -euo pipefail
           xcodebuild archive \
             -project Ares2ToolBox.xcodeproj \
             -scheme Ares2ToolBox \
-            -configuration ${{ inputs.configuration || 'Release' }} \
-            -archivePath build/Ares2ToolBox.xcarchive \
+            -configuration "${{ inputs.configuration || 'Release' }}" \
+            -archivePath "build/Ares2ToolBox.xcarchive" \
             -destination 'generic/platform=iOS' \
             -sdk iphoneos \
-            -allowProvisioningUpdates \
-            CODE_SIGN_STYLE=Manual \
-            CODE_SIGN_IDENTITY="Apple Development" \
+            CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGNING_ALLOWED=NO \
-            DEVELOPMENT_TEAM="" \
-            PROVISIONING_PROFILE_SPECIFIER="" \
             ONLY_ACTIVE_ARCH=NO \
             VALID_ARCHS="arm64 arm64e" \
-            ARCHS="arm64 arm64e" | tee xcodebuild_archive.log
+            ARCHS="arm64 arm64e" \
+            2>&1 | tee xcodebuild_archive.log
 
       - name: Check archive
         run: |
           if [ -d "build/Ares2ToolBox.xcarchive" ]; then
             echo "Archive created successfully"
-            ls -la build/Ares2ToolBox.xcarchive/
+            ls -la "build/Ares2ToolBox.xcarchive/"
           else
             echo "Archive creation failed"
+            echo "=== Build directory contents ==="
+            find build -type f -o -type d 2>/dev/null || echo "build/ directory is empty"
+            echo "=== xcodebuild log (last 50 lines) ==="
+            tail -50 xcodebuild_archive.log 2>/dev/null || true
             exit 1
           fi
 
       - name: Export IPA
         run: |
+          set -euo pipefail
           xcodebuild -exportArchive \
-            -archivePath build/Ares2ToolBox.xcarchive \
-            -exportPath build/export \
+            -archivePath "build/Ares2ToolBox.xcarchive" \
+            -exportPath "build/export" \
             -exportOptionsPlist exportOptions.plist \
-            -allowProvisioningUpdates | tee xcodebuild_export.log
-        continue-on-error: true
+            2>&1 | tee xcodebuild_export.log
 
       - name: Check IPA
         run: |
           if [ -f "build/export/Ares2ToolBox.ipa" ]; then
-            echo "IPA created successfully"
-            ls -la build/export/
+            echo "IPA created: $(ls -lh build/export/Ares2ToolBox.ipa)"
           else
-            echo "IPA not found at expected path, searching..."
+            echo "IPA not found, searching..."
             find build -name "*.ipa" -type f
           fi
 
@@ -106,6 +100,7 @@ jobs:
           if-no-files-found: warn
 
       - name: Upload build logs
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: build-logs
