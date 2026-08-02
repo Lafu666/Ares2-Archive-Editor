@@ -95,7 +95,7 @@
 
             if (colName && colType) {
                 NSString *typeStr = [NSString stringWithUTF8String:colType];
-                if (![typeStr caseInsensitiveCompare:@"BLOB"] == NSOrderedSame) {
+                if ([typeStr caseInsensitiveCompare:@"BLOB"] != NSOrderedSame) {
                     [columns addObject:[NSString stringWithUTF8String:colName]];
                 }
             }
@@ -213,7 +213,7 @@
 - (void)searchAllTables:(NSString *)keyword
                progress:(DBSearchProgressBlock)progress
              completion:(DBSearchCompletionBlock)completion {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0), ^{
         NSMutableArray *results = [NSMutableArray array];
         NSInteger totalFound = 0;
 
